@@ -1,0 +1,33 @@
+﻿@model IEnumerable<SysPrueba.Models.Estudiante>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@Html.ActionLink("Create","Create")
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(x => x.idEstudiante)</th>
+            <th>Nombre Completo</th>
+            <th>@Html.DisplayNameFor(x => x.Status)</th>
+            <th>Opciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var i in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(model => i.idEstudiante)</td>
+                <td>@(i.Nombres + " " + i.Apellidos)</td>
+                <td>@Html.DisplayFor(modelItem => i.Status)</td>
+                <td>
+                    @Html.ActionLink("Edit","Edit",new { id = i.idEstudiante}, new { @class = "btn btn-info"})
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

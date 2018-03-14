@@ -1,0 +1,92 @@
+﻿@model SysPrueba.Models.Estudiante
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Nombres, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Nombres, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Nombres, null, new { @class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Apellidos, new { @class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Apellidos, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Apellidos, null, new { @class = "text-danger"})
+            </div>
+        </div>
+
+        @Html.HiddenFor(m => m.Status)
+
+        <div class="form-group">
+            @Html.Label("Telefono", new { @class = "control-label col-md-2"})
+            <div class="col-md-8">
+                <input type="text" id="txtTelefono" name="Telefono" class="form-control" style="min-width: 100%!important"/>
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-default" id="btnAgregar">Agregar</button>
+            </div>            
+        </div>
+        <hr />
+
+        <table id="tbTelefonos" class="table table-condensed">
+            <thead>
+                <tr>
+                    <th>Telefono</th>
+                    <th>Opción</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function ()
+        {
+            function Add()
+            {
+                var campo = $('#txtTelefono').val();
+
+                var row = '<tr><td><input type="hidden" name="Telefono[]" value="' + campo + '"><p>' + campo + '</p></td><td><button id="btnEliminar" class="btn btn-danger">Eliminar</button></td></tr>';
+
+                $('#tbTelefonos').children('tbody').append(row);
+            }
+
+            $('#btnAgregar').click(Add);
+
+            $(document).on('click', '#btnEliminar', function (e)
+            {
+                e.preventDefault();
+                $(this).closest('tr').remove();
+            });
+        });
+    </script>
+
+    @Scripts.Render("~/bundles/jqueryval")
+}
